@@ -16,11 +16,57 @@
   </header>
 
   <main class="container">
-    <section class="card">
-      <h2>Patient Details</h2>
-      <p>This page will open when NFC is tapped.</p>
-      <p>Later we will make it automatically read the patient ID from the URL and show the correct patient record.</p>
-    </section>
-  </main>
+  <section class="card" id="patientCard">
+    <p>Loading patient data...</p>
+  </section>
+</main>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function getPatientId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id");
+  }
+
+  async function loadPatient() {
+    const id = getPatientId();
+
+    if (!id) {
+      document.getElementById("patientCard").innerHTML = "<p>No patient ID provided</p>";
+      return;
+    }
+
+    const { data, error } = await client
+      .from("patients")
+      .select("*")
+      .eq("patient_id", id)
+      .single();
+
+    if (error || !data) {
+      document.getElementById("patientCard").innerHTML = "<p>Patient not found</p>";
+      return;
+    }
+
+    document.getElementById("patientCard").innerHTML = `
+      <h2>${data.name}</h2>
+      <p><b>Patient ID:</b> ${data.patient_id}</p>
+      <p><b>Age:</b> ${data.age}</p>
+      <p><b>Gender:</b> ${data.gender}</p>
+      <p><b>Address:</b> ${data.address}</p>
+      <p><b>Chief Complaint:</b> ${data.chief_complaint}</p>
+      <p><b>Radiographs:</b> ${data.radiographs}</p>
+      <p><b>Diagnosis:</b> ${data.diagnosis}</p>
+      <p><b>Treatment Planned:</b> ${data.treatment_planned}</p>
+      <p><b>Treatment Done:</b> ${data.treatment_done}</p>
+      <p><b>Notes:</b> ${data.notes}</p>
+    `;
+  }
+
+  loadPatient();
+</script>
 </body>
 </html>
