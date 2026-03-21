@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Admin Panel</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Add Patient</h2>
+      <p>For now, this is a starter form layout. In the next steps, we will connect it to a real database.</p>
+
+      <form>
+        <label>Patient ID</label>
+        <input type="text" placeholder="PT001" />
+
+        <label>Name</label>
+        <input type="text" placeholder="Patient Name" />
+
+        <label>Age</label>
+        <input type="number" placeholder="Age" />
+
+        <label>Gender</label>
+        <input type="text" placeholder="Gender" />
+
+        <label>Address</label>
+        <textarea placeholder="Address"></textarea>
+
+        <label>Chief Complaint</label>
+        <textarea placeholder="Chief complaint"></textarea>
+
+        <label>Diagnosis</label>
+        <textarea placeholder="Diagnosis"></textarea>
+
+        <label>Treatment Planned</label>
+        <textarea placeholder="Treatment planned"></textarea>
+
+        <label>Treatment Done</label>
+        <textarea placeholder="Treatment done"></textarea>
+
+        <button type="button">Save Patient</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

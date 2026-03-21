@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Database</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Patient NFC Database</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Welcome</h2>
+      <p>This website will be used to store and open patient records through NFC card links.</p>
+      <p>Each NFC card can store a patient link like:</p>
+      <code>https://your-site.onrender.com/patient.html?id=PT001</code>
+    </section>
+
+    <section class="card">
+      <h2>Search Patient</h2>
+      <input type="text" id="searchId" placeholder="Enter patient ID e.g. PT001" />
+      <button onclick="openPatient()">Open Patient</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
