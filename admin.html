@@ -6,6 +6,8 @@
   <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+  <script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <body>
   <header class="topbar">
     <h1>Admin Panel</h1>
@@ -20,7 +22,46 @@
       <h2>Add Patient</h2>
       <p>For now, this is a starter form layout. In the next steps, we will connect it to a real database.</p>
 
-      <form>
+      <form id="patientForm">
+
+  <label>Patient ID</label>
+  <input type="text" id="patient_id" placeholder="PT001" required />
+
+  <label>Name</label>
+  <input type="text" id="name" required />
+
+  <label>Age</label>
+  <input type="number" id="age" />
+
+  <label>Gender</label>
+  <input type="text" id="gender" />
+
+  <label>Address</label>
+  <textarea id="address"></textarea>
+
+  <label>Chief Complaint</label>
+  <textarea id="chief_complaint"></textarea>
+
+  <label>Radiographs</label>
+  <textarea id="radiographs"></textarea>
+
+  <label>Diagnosis</label>
+  <textarea id="diagnosis"></textarea>
+
+  <label>Treatment Planned</label>
+  <textarea id="treatment_planned"></textarea>
+
+  <label>Treatment Done</label>
+  <textarea id="treatment_done"></textarea>
+
+  <label>Notes</label>
+  <textarea id="notes"></textarea>
+
+  <button type="submit">Save / Update Patient</button>
+
+</form>
+
+<p id="message"></p>
         <label>Patient ID</label>
         <input type="text" placeholder="PT001" />
 
@@ -52,5 +93,36 @@
       </form>
     </section>
   </main>
+  <script>
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.getElementById("patientForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const patient = {
+      patient_id: document.getElementById("patient_id").value,
+      name: document.getElementById("name").value,
+      age: parseInt(document.getElementById("age").value) || null,
+      gender: document.getElementById("gender").value,
+      address: document.getElementById("address").value,
+      chief_complaint: document.getElementById("chief_complaint").value,
+      radiographs: document.getElementById("radiographs").value,
+      diagnosis: document.getElementById("diagnosis").value,
+      treatment_planned: document.getElementById("treatment_planned").value,
+      treatment_done: document.getElementById("treatment_done").value,
+      notes: document.getElementById("notes").value
+    };
+
+    const { error } = await client
+      .from("patients")
+      .upsert([patient], { onConflict: "patient_id" });
+
+    if (error) {
+      document.getElementById("message").innerText = "Error: " + error.message;
+    } else {
+      document.getElementById("message").innerText = "✅ Patient saved successfully!";
+    }
+  });
+</script>
 </body>
 </html>
